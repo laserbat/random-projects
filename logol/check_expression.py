@@ -1,0 +1,25 @@
+#!/usr/bin/python3
+
+X = 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+
+A = 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff0000000000000000000000000000000000000000000000000000000000000000
+B = 0xffffffffffffffffffffffffffffffff00000000000000000000000000000000ffffffffffffffffffffffffffffffff00000000000000000000000000000000
+C = 0xffffffffffffffff0000000000000000ffffffffffffffff0000000000000000ffffffffffffffff0000000000000000ffffffffffffffff0000000000000000
+D = 0xffffffff00000000ffffffff00000000ffffffff00000000ffffffff00000000ffffffff00000000ffffffff00000000ffffffff00000000ffffffff00000000
+E = 0xffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000ffff0000
+F = 0xff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00ff00 
+G = 0xf0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0
+H = 0xcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
+I = 0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+
+A,B,C,D,E,F,G,H,J,K,L,M = A&B, C&D, E&F, G&H, ~(A|B), ~(C|D), ~(E|F), ~(G|H), A^B, C^D, E^F, G^H
+
+N = M | I & H
+O = D | I & M
+
+y=F&E&(N&C|L&O|I&G&D)|(O&G|L&N|H&C)&(J&F|K&E)|(N&G|L&H)&(E&B|F&A|K&J)|H&G&(J&B|K&A)
+
+gol = "00000000000000000000000000000000000000000000000000000000000000110000000000000000000000000000001100000000000000110000001100111110000000000000000000000000000000110000000000000011000000110011111000000000000000110000001100111110000000110011111000111110111010000000000000000000000000000000001100000000000000110000001100111110000000000000001100000011001111100000001100111110001111101110100000000000000000110000001100111110000000110011111000111110111010000000001100111110001111101110100000111110111010001110100010000000"
+truth = bin(y + 2**512)[3:]
+
+print(truth, gol == truth)
