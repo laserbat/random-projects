@@ -14,59 +14,59 @@ def variables(x, y):
     return p & q, ~(p | q), p ^ q
 
 def transform(x, y):
-    PQA, PRA, PSA = variables(x, 1)
-    PQB, PRB, PSB = variables(x, W - 1)
-    PQC, PRC, PSC = variables(x, W)
-    PQD, PRD, PSD = variables(x, W + 1)
+    PBA, PNA, POA = variables(x, 1)
+    PBB, PNB, POB = variables(x, W - 1)
+    PBC, PNC, POC = variables(x, W)
+    PBD, PND, POD = variables(x, W + 1)
 
-    NQA, NRA, NSA = variables(y, 1)
-    NQB, NRB, NSB = variables(y, W - 1)
-    NQC, NRC, NSC = variables(y, W)
-    NQD, NRD, NSD = variables(y, W + 1)
+    NBA, NNA, NOA = variables(y, 1)
+    NBB, NNB, NOB = variables(y, W - 1)
+    NBC, NNC, NOC = variables(y, W)
+    NBD, NND, NOD = variables(y, W + 1)
 
     Y0 = x
     Y1 = y
 
-    P0 = PRA & PRB & PRC & PRD
-    N0 = NRA & NRB & NRC & NRD
+    P0 = PNA & PNB & PNC & PND
+    N0 = NNA & NNB & NNC & NND
 
-    P8 = PQA & PQB & PQC & PQD
-    N8 = NQA & NQB & NQC & NQD
+    P8 = PBA & PBB & PBC & PBD
+    N8 = NBA & NBB & NBC & NBD
 
-    P1 = PRA & PRB & (PRC & PSD | PRD & PSC) | PRC & PRD & (PRA & PSB | PSA & PRB)
-    N1 = NRA & NRB & (NRC & NSD | NRD & NSC) | NRC & NRD & (NRA & NSB | NSA & NRB)
+    P1 = PNA & PNB & (PNC & POD | PND & POC) | PNC & PND & (PNA & POB | POA & PNB)
+    N1 = NNA & NNB & (NNC & NOD | NND & NOC) | NNC & NND & (NNA & NOB | NOA & NNB)
 
-    P7 = PQA & PQB & (PQC & PSD | PQD & PSC) | PQC & PQD & (PQA & PSB | PSA & PQB)
-    N7 = NQA & NQB & (NQC & NSD | NQD & NSC) | NQC & NQD & (NQA & NSB | NSA & NQB)
+    P7 = PBA & PBB & (PBC & POD | PBD & POC) | PBC & PBD & (PBA & POB | POA & PBB)
+    N7 = NBA & NBB & (NBC & NOD | NBD & NOC) | NBC & NBD & (NBA & NOB | NOA & NBB)
 
-    P2 = PRA & PRB & (PQC & PRD | PSC & PSD | PRC & PQD) |  PRC & PRD & (PQA & PRB | PSA & PSB | PRA & PQB) |\
-        ((PRA & PSB) | (PSA & PRB)) & ((PRC & PSD) | (PSC & PRD))
+    P2 = PNA & PNB & (PBC & PND | POC & POD | PNC & PBD) |  PNC & PND & (PBA & PNB | POA & POB | PNA & PBB) |\
+        ((PNA & POB) | (POA & PNB)) & ((PNC & POD) | (POC & PND))
 
-    N2 = NRA & NRB & (NQC & NRD | NSC & NSD | NRC & NQD) |  NRC & NRD & (NQA & NRB | NSA & NSB | NRA & NQB) |\
-        ((NRA & NSB) | (NSA & NRB)) & ((NRC & NSD) | (NSC & NRD))
+    N2 = NNA & NNB & (NBC & NND | NOC & NOD | NNC & NBD) |  NNC & NND & (NBA & NNB | NOA & NOB | NNA & NBB) |\
+        ((NNA & NOB) | (NOA & NNB)) & ((NNC & NOD) | (NOC & NND))
 
-    P6 = PQA & PQB & (PRC & PQD | PSC & PSD | PQC & PRD) |  PQC & PQD & (PRA & PQB | PSA & PSB | PQA & PRB) |\
-        ((PQA & PSB) | (PSA & PQB)) & ((PQC & PSD) | (PSC & PQD))
+    P6 = PBA & PBB & (PNC & PBD | POC & POD | PBC & PND) |  PBC & PBD & (PNA & PBB | POA & POB | PBA & PNB) |\
+        ((PBA & POB) | (POA & PBB)) & ((PBC & POD) | (POC & PBD))
 
-    N6 = NQA & NQB & (NRC & NQD | NSC & NSD | NQC & NRD) |  NQC & NQD & (NRA & NQB | NSA & NSB | NQA & NRB) |\
-        ((NQA & NSB) | (NSA & NQB)) & ((NQC & NSD) | (NSC & NQD))
+    N6 = NBA & NBB & (NNC & NBD | NOC & NOD | NBC & NND) |  NBC & NBD & (NNA & NBB | NOA & NOB | NBA & NNB) |\
+        ((NBA & NOB) | (NOA & NBB)) & ((NBC & NOD) | (NOC & NBD))
 
-    P3 = PRA & PRB & (PQC & PSD | PSC & PQD) | PRC & PRD & (PQA & PSB | PSA & PQB) | \
-         (PRA & PSB | PSA & PRB ) & (PQC & PRD | PSC & PSD | PRC & PQD) |  \
-         (PRC & PSD | PSC & PRD ) & (PQA & PRB | PSA & PSB | PRA & PQB)
+    P3 = PNA & PNB & (PBC & POD | POC & PBD) | PNC & PND & (PBA & POB | POA & PBB) | \
+         (PNA & POB | POA & PNB ) & (PBC & PND | POC & POD | PNC & PBD) |  \
+         (PNC & POD | POC & PND ) & (PBA & PNB | POA & POB | PNA & PBB)
 
-    N3 = NRA & NRB & (NQC & NSD | NSC & NQD) | NRC & NRD & (NQA & NSB | NSA & NQB) | \
-         (NRA & NSB | NSA & NRB ) & (NQC & NRD | NSC & NSD | NRC & NQD) | \
-         (NRC & NSD | NSC & NRD ) & (NQA & NRB | NSA & NSB | NRA & NQB)
+    N3 = NNA & NNB & (NBC & NOD | NOC & NBD) | NNC & NND & (NBA & NOB | NOA & NBB) | \
+         (NNA & NOB | NOA & NNB ) & (NBC & NND | NOC & NOD | NNC & NBD) | \
+         (NNC & NOD | NOC & NND ) & (NBA & NNB | NOA & NOB | NNA & NBB)
 
 
-    P5 = PQA & PQB & (PRC & PSD | PSC & PRD) | PQC & PQD & (PRA & PSB | PSA & PRB) | \
-         (PQA & PSB | PSA & PQB ) & (PRC & PQD | PSC & PSD | PQC & PRD) | \
-         (PQC & PSD | PSC & PQD ) & (PRA & PQB | PSA & PSB | PQA & PRB)
+    P5 = PBA & PBB & (PNC & POD | POC & PND) | PBC & PBD & (PNA & POB | POA & PNB) | \
+         (PBA & POB | POA & PBB ) & (PNC & PBD | POC & POD | PBC & PND) | \
+         (PBC & POD | POC & PBD ) & (PNA & PBB | POA & POB | PBA & PNB)
 
-    N5 = NQA & NQB & (NRC & NSD | NSC & NRD) | NQC & NQD & (NRA & NSB | NSA & NRB) | \
-         (NQA & NSB | NSA & NQB ) & (NRC & NQD | NSC & NSD | NQC & NRD) | \
-         (NQC & NSD | NSC & NQD ) & (NRA & NQB | NSA & NSB | NQA & NRB)
+    N5 = NBA & NBB & (NNC & NOD | NOC & NND) | NBC & NBD & (NNA & NOB | NOA & NNB) | \
+         (NBA & NOB | NOA & NBB ) & (NNC & NBD | NOC & NOD | NBC & NND) | \
+         (NBC & NOD | NOC & NBD ) & (NNA & NBB | NOA & NOB | NBA & NNB)
 
     P4 = ~(P0 | P1 | P2 | P3 | P5 | P6 | P7 | P8)
     N4 = ~(N0 | N1 | N2 | N3 | N5 | N6 | N7 | N8)
