@@ -1,0 +1,5 @@
+A bunch of cellular automata experiments.
+
+Compile and pipe the output into mpv, e.g.
+
+gcc -Ofast -march=native ./ant.c -o ant; ./ant | mpv - -scale oversample
